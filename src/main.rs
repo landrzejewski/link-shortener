@@ -5,6 +5,7 @@ mod routes;
 mod utils;
 
 use auth::auth;
+use axum::http::Method;
 use axum::middleware::from_fn_with_state;
 use axum::routing::{get, patch, post};
 use axum::{serve, Router};
@@ -15,6 +16,8 @@ use sqlx::postgres::PgPoolOptions;
 use sqlx::{Pool, Postgres};
 use tokio::net::TcpListener;
 use tokio_cron_scheduler::{Job, JobScheduler};
+use tower_http::compression::CompressionLayer;
+use tower_http::cors::{Any, CorsLayer};
 use tower_http::trace::TraceLayer;
 use tracing_subscriber::layer::SubscriberExt;
 use tracing_subscriber::util::SubscriberInitExt;
@@ -88,6 +91,19 @@ async fn create_listener(server_address: &str) -> TcpListener {
 fn create_router(db_connection_pool: Pool<Postgres>) -> Router {
     // let (prometheus_layer, prometheus_handle) = PrometheusMetricLayer::pair();
     Router::new()
+        .layer(
+            CorsLayer::new()
+                .allow_methods([
+                    Method::GET,
+                    Method::POST,
+                    Method::PATCH,
+                    Method::PUT,
+                    Method::DELETE,
+                    Method::OPTIONS,
+                ])
+                .allow_origin(Any),
+        )
+        .layer(CompressionLayer::new())
         .route("/links", post(create_link))
         .route(
             "/:id/statistics",

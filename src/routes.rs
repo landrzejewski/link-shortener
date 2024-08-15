@@ -80,7 +80,7 @@ pub async fn update_link(
     .await?;
     match link {
         Ok(link) => Ok(Json(link)),
-        _ => Err((StatusCode::NOT_FOUND, "Not found".into()))
+        _ => Err((StatusCode::NOT_FOUND, "Not found".into())),
     }
 }
 

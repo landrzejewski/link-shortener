@@ -3,10 +3,10 @@ use base64::prelude::BASE64_URL_SAFE_NO_PAD;
 use base64::Engine;
 use rand::Rng;
 use sqlx::__rt::timeout;
+use std::env;
 use std::error::Error;
 use std::future::Future;
 use std::time::Duration;
-use std::{env};
 use url::Url;
 
 pub fn internal_error<E>(err: E) -> (StatusCode, String)
