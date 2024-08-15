@@ -1,0 +1,32 @@
+POST http://localhost:8080/links
+Accept: application/json
+Content-Type: application/json
+x-api-key: NzUyNTAzODM4
+
+{
+  "targetUrl": "https://google.org?test=Łukasz_AndrzejewskiążźćńóęŁukasz_Andrzejewsźćńóę",
+  "expiration": "2024-08-14T21:13:00Z"
+}
+
+###
+
+GET http://localhost:8080/NDIxODY5NTc5OQ
+
+###
+
+PATCH http://localhost:8080/NDIxODY5NTc5OQ
+Accept: application/json
+Content-Type: application/json
+x-api-key: NzUyNTAzODM4
+
+{
+  "targetUrl": "https://google.org?test=Łukasz_Andrzejewskiążźćńóę",
+  "expiration": "2024-08-14T21:01:00Z"
+}
+
+###
+
+GET http://localhost:8080/NDIxODY5NTc5OQ/statistics
+Accept: application/json
+Content-Type: application/json
+x-api-key: NzUyNTAzODM4
