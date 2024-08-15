@@ -21,7 +21,7 @@ use tracing_subscriber::util::SubscriberInitExt;
 use tracing_subscriber::EnvFilter;
 use utils::get_env;
 
-const DEFAULT_TRACING_LEVEL: &str = "link_shortener=debug";
+const DEFAULT_TRACING_LEVEL: &str = "link_shortener=info";
 const DATABASE_MAX_CONNECTIONS: u32 = 20;
 const CLEANING_JOB_CRON_EXPRESSION: &str = "1/60 * * * * *";
 

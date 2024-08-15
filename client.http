@@ -5,16 +5,16 @@ x-api-key: NzUyNTAzODM4
 
 {
   "targetUrl": "https://google.org?test=Łukasz_AndrzejewskiążźćńóęŁukasz_Andrzejewsźćńóę",
-  "expiration": "2024-08-14T21:13:00Z"
+  "expiration": "2024-08-16T21:13:00Z"
 }
 
 ###
 
-GET http://localhost:8080/NDIxODY5NTc5OQ
+GET http://localhost:8080/NTA5NTU
 
 ###
 
-PATCH http://localhost:8080/NDIxODY5NTc5OQ
+PATCH http://localhost:8080/NTA5NTU
 Accept: application/json
 Content-Type: application/json
 x-api-key: NzUyNTAzODM4
@@ -26,7 +26,7 @@ x-api-key: NzUyNTAzODM4
 
 ###
 
-GET http://localhost:8080/NDIxODY5NTc5OQ/statistics
+GET http://localhost:8080/NTA5NTU/statistics
 Accept: application/json
 Content-Type: application/json
 x-api-key: NzUyNTAzODM4

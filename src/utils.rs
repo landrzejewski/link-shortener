@@ -6,7 +6,7 @@ use sqlx::__rt::timeout;
 use std::error::Error;
 use std::future::Future;
 use std::time::Duration;
-use std::{env, u16};
+use std::{env};
 use url::Url;
 
 pub fn internal_error<E>(err: E) -> (StatusCode, String)
@@ -42,7 +42,7 @@ pub fn get_header(name: &str, headers: &HeaderMap) -> Option<String> {
 pub fn parse_url(text: &str) -> Result<String, (StatusCode, String)> {
     Url::parse(text)
         .map(|url| url.to_string())
-        .map_err(|_| (StatusCode::BAD_REQUEST, "url malformed".into()))
+        .map_err(|_| (StatusCode::BAD_REQUEST, "Malformed url".into()))
 }
 
 pub fn generate_id() -> String {

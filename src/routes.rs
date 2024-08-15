@@ -77,9 +77,11 @@ pub async fn update_link(
             updated_link.expiration,
         ),
     )
-    .await?
-    .map_err(internal_error)?;
-    Ok(Json(link))
+    .await?;
+    match link {
+        Ok(link) => Ok(Json(link)),
+        _ => Err((StatusCode::NOT_FOUND, "Not found".into()))
+    }
 }
 
 pub async fn redirect(

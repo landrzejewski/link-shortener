@@ -9,3 +9,11 @@ services:
       - POSTGRES_DB=link-shortener
     volumes:
       - ./data/postgres:/var/lib/postgresql/data
+  link-shortener:
+    image: link-shortener
+    ports:
+      - "8080:8080"
+    environment:
+      - SERVER_ADDRESS=0.0.0.0:8080
+      - DATABASE_URL=postgres://admin:admin@postgres:5432/link-shortener
+      - ENCRYPTED_API_KEY=60b6c19c600d605cd6333d28cc852a3edea3a9d0693029156d1097e6f43c1348
