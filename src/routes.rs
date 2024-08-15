@@ -123,6 +123,15 @@ pub async fn redirect(
         .expect("Response build failed"))
 }
 
+pub async fn get_links(
+    State(db_connection_pool): State<PgPool>,
+) -> Result<Json<Vec<Link>>, (StatusCode, String)> {
+    let links = with_timeout(DEFAULT_TIMEOUT, dao::get_all(db_connection_pool.clone()))
+        .await?
+        .map_err(internal_error)?;
+    Ok(Json(links))
+}
+
 pub async fn health() -> impl IntoResponse {
     (StatusCode::OK, "OK")
 }

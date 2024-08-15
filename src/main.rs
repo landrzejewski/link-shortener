@@ -4,9 +4,10 @@ mod model;
 mod routes;
 mod utils;
 
+use crate::routes::get_links;
 use auth::auth;
 use axum::http::Method;
-use axum::middleware::from_fn_with_state;
+use axum::middleware::from_fn;
 use axum::routing::{get, patch, post};
 use axum::{serve, Router};
 use dao::delete_expired;
@@ -104,17 +105,17 @@ fn create_router(db_connection_pool: Pool<Postgres>) -> Router {
                 .allow_origin(Any),
         )
         .layer(CompressionLayer::new())
-        .route("/links", post(create_link))
+        .route(
+            "/links",
+            post(create_link).get(get_links).route_layer(from_fn(auth)),
+        )
         .route(
             "/:id/statistics",
-            get(get_link_statistics)
-                .route_layer(from_fn_with_state(db_connection_pool.clone(), auth)),
+            get(get_link_statistics).route_layer(from_fn(auth)),
         )
         .route(
             "/:id",
-            patch(update_link)
-                .route_layer(from_fn_with_state(db_connection_pool.clone(), auth))
-                .get(redirect),
+            patch(update_link).route_layer(from_fn(auth)).get(redirect),
         )
         .route("/health", get(health))
         //.route("/metrics", get(|| async move { prometheus_handle.render() }))

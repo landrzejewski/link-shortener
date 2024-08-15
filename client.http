@@ -10,11 +10,18 @@ x-api-key: NzUyNTAzODM4
 
 ###
 
-GET http://localhost:8080/NTA5NTU
+GET http://localhost:8080/MTI2MTg
 
 ###
 
-PATCH http://localhost:8080/NTA5NTU
+GET http://localhost:8080/links
+Accept: application/json
+Content-Type: application/json
+x-api-key: NzUyNTAzODM4
+
+###
+
+PATCH http://localhost:8080/MTI2MTg
 Accept: application/json
 Content-Type: application/json
 x-api-key: NzUyNTAzODM4

@@ -24,6 +24,16 @@ pub async fn save(
         .await
 }
 
+pub async fn get_all(db_connection_pool: Pool<Postgres>) -> Result<Vec<Link>, Error> {
+    sqlx::query_as(
+        r#"
+              select id, target_url, expiration from links order by expiration desc limit 200
+            "#,
+    )
+    .fetch_all(&db_connection_pool)
+    .await
+}
+
 pub async fn get_by_id(
     db_connection_pool: Pool<Postgres>,
     id: &str,
