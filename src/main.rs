@@ -92,19 +92,6 @@ async fn create_listener(server_address: &str) -> TcpListener {
 fn create_router(db_connection_pool: Pool<Postgres>) -> Router {
     // let (prometheus_layer, prometheus_handle) = PrometheusMetricLayer::pair();
     Router::new()
-        .layer(
-            CorsLayer::new()
-                .allow_methods([
-                    Method::GET,
-                    Method::POST,
-                    Method::PATCH,
-                    Method::PUT,
-                    Method::DELETE,
-                    Method::OPTIONS,
-                ])
-                .allow_origin(Any),
-        )
-        .layer(CompressionLayer::new())
         .route(
             "/links",
             post(create_link).get(get_links).route_layer(from_fn(auth)),
@@ -120,6 +107,19 @@ fn create_router(db_connection_pool: Pool<Postgres>) -> Router {
         .route("/health", get(health))
         //.route("/metrics", get(|| async move { prometheus_handle.render() }))
         .layer(TraceLayer::new_for_http())
+        .layer(
+            CorsLayer::new()
+                .allow_methods([
+                    Method::GET,
+                    Method::POST,
+                    Method::PATCH,
+                    Method::PUT,
+                    Method::DELETE,
+                    Method::OPTIONS,
+                ])
+                .allow_origin(Any),
+        )
+        .layer(CompressionLayer::new())
         //.layer(prometheus_layer)
         .with_state(db_connection_pool.clone())
 }
