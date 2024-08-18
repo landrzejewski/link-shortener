@@ -98,7 +98,7 @@ pub async fn redirect(
     .await
     .map_err(internal_error)?
     .map_err(internal_error)?
-    .ok_or_else(|| "Not found".to_string())
+    .ok_or_else(|| "Not found".to_owned())
     .map_err(|err| (StatusCode::NOT_FOUND, err))?;
 
     let referer = get_header("Referer", &headers);
