@@ -1,12 +1,13 @@
 use axum::http::{HeaderMap, StatusCode};
 use base64::prelude::BASE64_URL_SAFE_NO_PAD;
 use base64::Engine;
-use rand::Rng;
+use rand::{thread_rng, Rng};
 use sqlx::__rt::timeout;
 use std::env;
 use std::error::Error;
 use std::future::Future;
 use std::time::Duration;
+use rand::distributions::Alphanumeric;
 use url::Url;
 
 pub fn internal_error<E>(err: E) -> (StatusCode, String)
@@ -46,6 +47,10 @@ pub fn parse_url(text: &str) -> Result<String, (StatusCode, String)> {
 }
 
 pub fn generate_id() -> String {
-    let random_id = rand::thread_rng().gen_range(0..u16::MAX).to_string();
-    BASE64_URL_SAFE_NO_PAD.encode(random_id)
+    let id: String = thread_rng()
+        .sample_iter(&Alphanumeric)
+        .take(6)
+        .map(char::from)
+        .collect();
+    BASE64_URL_SAFE_NO_PAD.encode(id)
 }
